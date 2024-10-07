@@ -8,6 +8,7 @@ const ProductList = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
+  const [sort, setSort] = useState("asc"); // Default sort order
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -22,16 +23,18 @@ const ProductList = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      let url = "https://fakestoreapi.com/products";
+      let url = `https://fakestoreapi.com/products?limit=${itemsPerPage}&sort=${sort}`;
+
       if (selectedCategory) {
-        url += `/category/${selectedCategory}`;
+        url += `&category=${selectedCategory}`;
       }
+
       const response = await fetch(url);
       const data = await response.json();
       setProducts(data);
     };
     fetchProducts();
-  }, [selectedCategory, setProducts]);
+  }, [selectedCategory, currentPage, sort, itemsPerPage, setProducts]);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -62,6 +65,19 @@ const ProductList = () => {
         </select>
       </div>
 
+      {/* Sort Order */}
+      <div className="mb-4">
+        <label className="mr-2">Sort by:</label>
+        <select
+          value={sort}
+          onChange={(e) => setSort(e.target.value)}
+          className="border border-gray-300 p-2 rounded"
+        >
+          <option value="asc">Ascending</option>
+          <option value="desc">Descending</option>
+        </select>
+      </div>
+
       <table className="w-full border-collapse border border-gray-400">
         <thead>
           <tr>
@@ -85,7 +101,9 @@ const ProductList = () => {
             key={index}
             onClick={() => setCurrentPage(index + 1)}
             className={`p-2 border ${
-              currentPage === index + 1 ? "bg-blue-500" : "bg-white"
+              currentPage === index + 1
+                ? "bg-blue-500 text-white"
+                : "bg-white text-blue-500"
             }`}
           >
             {index + 1}

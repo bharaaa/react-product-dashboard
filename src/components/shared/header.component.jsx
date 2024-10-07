@@ -19,7 +19,7 @@ const Header = () => {
               <Link to="/dashboard">Dashboard</Link>
             </li>
             <li className="mx-2 font-normal hover:font-bold transition-all duration-200">
-              <Link to="/products">Products</Link>
+              <Link to="/product">Products</Link>
             </li>
             <li className="mx-2">
               <button className="bg-blue-500 px-2 py-2 rounded-lg text-white font-sans font-bold hover:bg-blue-400 transition-colors duration-200" onClick={handleLogout}>

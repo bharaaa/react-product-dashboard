@@ -6,6 +6,8 @@ import {
   useLocation,
 } from "react-router-dom";
 import Header from "./components/shared/header.component";
+import ProductList from "./components/products/ProductList.component";
+import ProductDetail from "./components/products/ProductDetail.component";
 
 function App() {
   const location = useLocation();
@@ -16,8 +18,10 @@ function App() {
     <>
       {showHeader && <Header />}
       <Routes>
-        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/" element={<Login />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/product" element={<ProductList />} />
+        <Route path="/products/:id" element={<ProductDetail />} />
       </Routes>
     </>
   );

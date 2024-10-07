@@ -44,8 +44,8 @@ export const GlobalProvider = ({ children }) => {
     dispatch({ type: "LIST_PRODUCTS", payload: products });
   };
 
-  const setUser = (user) => {
-    dispatch({ type: "SET_USER", payload: user });
+  const setUser = (userData) => {
+    dispatch({ type: "SET_USER", payload: userData });
   };
 
   const login = (token) => {
@@ -57,7 +57,9 @@ export const GlobalProvider = ({ children }) => {
   };
 
   return (
-    <GlobalContext.Provider value={{ state, setUser, setProducts, login, logout }}>
+    <GlobalContext.Provider
+      value={{ state, setUser, setProducts, login, logout }}
+    >
       {children}
     </GlobalContext.Provider>
   );

@@ -1,17 +1,25 @@
 import "./App.css";
-import HeaderComponent from "./components/shared/header.component";
-import LoginComponent from "./components/auth/login.component";
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from "./components/auth/login.component";
+import {
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
+import Header from "./components/shared/header.component";
 
 function App() {
+  const location = useLocation();
+
+  const showHeader = location.pathname !== "/";
+
   return (
-    <Router>
-      <HeaderComponent />
+    <>
+      {showHeader && <Header />}
       <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/login" element={<LoginComponent />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/" element={<Login />} />
       </Routes>
-    </Router>
+    </>
   );
 }
 

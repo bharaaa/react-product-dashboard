@@ -13,6 +13,11 @@ const reducer = (state, action) => {
         ...state,
         products: action.payload,
       };
+    case "SET_USER":
+      return {
+        ...state,
+        user: action.payload,
+      };
     case "LOGIN":
       return {
         ...state,
@@ -39,6 +44,10 @@ export const GlobalProvider = ({ children }) => {
     dispatch({ type: "LIST_PRODUCTS", payload: products });
   };
 
+  const setUser = (user) => {
+    dispatch({ type: "SET_USER", payload: user });
+  };
+
   const login = (token) => {
     dispatch({ type: "LOGIN", payload: token });
   };
@@ -48,7 +57,7 @@ export const GlobalProvider = ({ children }) => {
   };
 
   return (
-    <GlobalContext.Provider value={{ state, setProducts, login, logout }}>
+    <GlobalContext.Provider value={{ state, setUser, setProducts, login, logout }}>
       {children}
     </GlobalContext.Provider>
   );

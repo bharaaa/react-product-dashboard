@@ -1,33 +1,40 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-// import axios from "axios";
-// import { GlobalContext } from "../context/GlobalState";
+import { GlobalContext } from "../context/GlobalState";
 
 const Login = () => {
+  const { setUser } = useContext(GlobalContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  // const { login } = useContext(GlobalContext);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
-      //   const response = await axios.post("https://fakestoreapi.com/auth/login", {
-      //     username,
-      //     password,
-      //   });
+      const response = await fetch("https://fakestoreapi.com/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: "mor_2314",
+          password: "83r5^_",
+        }),
+      });
 
-      //   login(response.data.token);
-
-      if (username == "username" && password == "password") {
-        navigate("/dashboard");
-      } else {
-        setError("Invalid username & password");
+      if (!response.ok) {
+        throw new Error("Failed to log in. Please check your credentials.");
       }
-    } catch (err) {
-      setError("Error: ", err);
+
+      const data = await response.json();
+      setUser(data);
+      console.log(data);
+
+      navigate("/dashboard");
+    } catch (error) {
+      setError(error.message);
     }
   };
 

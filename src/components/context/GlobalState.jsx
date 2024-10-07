@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+import { createContext, useEffect, useReducer } from "react";
 
 const initialState = {
   isAuthenticated: false,
@@ -38,6 +38,20 @@ const reducer = (state, action) => {
 export const GlobalContext = createContext(initialState);
 
 export const GlobalProvider = ({ children }) => {
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch("https://fakestoreapi.com/products");
+        const data = await response.json();
+        dispatch({ type: "LIST_PRODUCTS", payload: data });
+      } catch (error) {
+        console.error("Failed to fetch products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const setProducts = (products) => {

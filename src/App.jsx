@@ -5,6 +5,7 @@ import Header from "./components/shared/header.component";
 import ProductList from "./components/products/ProductList.component";
 import ProductDetail from "./components/products/ProductDetail.component";
 import PrivateRoute from "./components/auth/PrivateRoute";
+import Dashboard from "./components/Dashboard.component";
 
 function App() {
   const location = useLocation();
@@ -32,9 +33,5 @@ function App() {
     </>
   );
 }
-
-const Dashboard = () => {
-  return <h1 className="font-bold text-black">Welcome to the Dashboard</h1>;
-};
 
 export default App;

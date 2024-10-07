@@ -11,7 +11,7 @@ const Header = () => {
     <>
       <div className="flex flex-row justify-between py-5 items-center">
         <div>
-          <p className="font-sans font-bold text-xl">Home</p>
+          <p className="font-sans font-bold text-3xl">Home</p>
         </div>
         <div>
           <ul className="flex flex-row font-sans items-center">
@@ -22,7 +22,7 @@ const Header = () => {
               <Link to="/product">Products</Link>
             </li>
             <li className="mx-2">
-              <button className="bg-blue-500 px-2 py-2 rounded-lg text-white font-sans font-bold hover:bg-blue-400 transition-colors duration-200" onClick={handleLogout}>
+              <button className="bg-blue-500 px-2 py-2 rounded-lg text-white font-sans font-bold hover:bg-blue-600 transition-colors duration-200" onClick={handleLogout}>
                 Log Out
               </button>
             </li>

@@ -7,10 +7,11 @@ const ProductList = () => {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10);
-  const [sort, setSort] = useState("asc"); // Default sort order
+  const [itemsPerPage] = useState(8);
+  const [sort, setSort] = useState("asc");
 
   useEffect(() => {
+    // Fetch categories
     const fetchCategories = async () => {
       const response = await fetch(
         "https://fakestoreapi.com/products/categories"
@@ -23,10 +24,10 @@ const ProductList = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      let url = `https://fakestoreapi.com/products?limit=${itemsPerPage}&sort=${sort}`;
+      let url = `https://fakestoreapi.com/products`;
 
       if (selectedCategory) {
-        url += `&category=${selectedCategory}`;
+        url += `/category/${selectedCategory}`;
       }
 
       const response = await fetch(url);
@@ -34,15 +35,19 @@ const ProductList = () => {
       setProducts(data);
     };
     fetchProducts();
-  }, [selectedCategory, currentPage, sort, itemsPerPage, setProducts]);
+  }, [selectedCategory, setProducts]);
+
+  const sortedProducts = [...state.products].sort((a, b) => {
+    return sort === "asc" ? a.id - b.id : b.id - a.id;
+  });
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentProducts = state.products.slice(
+  const currentProducts = sortedProducts.slice(
     indexOfFirstItem,
     indexOfLastItem
   );
-  const totalPages = Math.ceil(state.products.length / itemsPerPage);
+  const totalPages = Math.ceil(sortedProducts.length / itemsPerPage);
 
   return (
     <div className="container mx-auto mt-8">
@@ -65,7 +70,6 @@ const ProductList = () => {
         </select>
       </div>
 
-      {/* Sort Order */}
       <div className="mb-4">
         <label className="mr-2">Sort by:</label>
         <select
@@ -73,11 +77,12 @@ const ProductList = () => {
           onChange={(e) => setSort(e.target.value)}
           className="border border-gray-300 p-2 rounded"
         >
-          <option value="asc">Ascending</option>
-          <option value="desc">Descending</option>
+          <option value="asc">ID: Ascending</option>
+          <option value="desc">ID: Descending</option>
         </select>
       </div>
 
+      {/* Products Table */}
       <table className="w-full border-collapse border border-gray-400">
         <thead>
           <tr>
@@ -95,7 +100,8 @@ const ProductList = () => {
         </tbody>
       </table>
 
-      <div className="mt-4">
+      {/* Pagination */}
+      <div className="mt-4 flex space-x-2">
         {Array.from({ length: totalPages }, (_, index) => (
           <button
             key={index}

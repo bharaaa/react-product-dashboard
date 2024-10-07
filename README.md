@@ -21,3 +21,5 @@ This is a simple e-commerce product dashboard built with React, Tailwind CSS, an
 3. Run the project:
 
 This will start the development server at http://localhost:5173/
+
+This project is deployed here https://react-product-dashboard-bhara.netlify.app

@@ -1,8 +1,23 @@
-# React + Vite
+# Product Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a simple e-commerce product dashboard built with React, Tailwind CSS, and the fakeStoreAPI for product data. It allows users to view products, filter by category, sort by product ID, and paginate through the product list.
 
-Currently, two official plugins are available:
+## Technologies Used
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Frontend: React
+- Styling: Tailwind CSS
+- API: Fake Store API
+
+## Requirement
+
+- Node.js
+- NPM/Yarn
+- Vite
+
+## Instalation
+
+1. Clone the repository
+2. Install the dependencies
+3. Run the project:
+
+This will start the development server at http://localhost:5173/

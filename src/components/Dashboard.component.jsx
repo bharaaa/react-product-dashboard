@@ -1,34 +1,46 @@
-import { useContext, useEffect, useState } from "react";
-import { GlobalContext } from "./context/GlobalState";
+import { useEffect, useState } from "react";
 import ProductItem from "./products/ProductItem.component";
 
 const Dashboard = () => {
-  const { state } = useContext(GlobalContext);
   const [totalProducts, setTotalProducts] = useState(0);
   const [minPrice, setMinPrice] = useState(null);
   const [maxPrice, setMaxPrice] = useState(null);
   const [cheapestProduct, setCheapestProduct] = useState(null);
   const [mostExpensiveProduct, setMostExpensiveProduct] = useState(null);
   const [categoryCount, setCategoryCount] = useState({});
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    if (state.products.length > 0) {
-      const prices = state.products.map((product) => product.price);
-      setTotalProducts(state.products.length);
-      console.log(state.products.length);
+    const fetchProducts = async () => {
+      const response = await fetch(
+        "https://fakestoreapi.com/products"
+      );
+      const data = await response.json();
+      setProducts(data);
+    };
+    fetchProducts();
+  }, []);
+
+  useEffect(() => {
+    if (products.length > 0) {
+      const prices = products.map((product) => product.price);
+      setTotalProducts(products.length);
+      console.log(products.length);
 
       const min = Math.min(...prices);
       const max = Math.max(...prices);
       setMinPrice(min);
       setMaxPrice(max);
 
-      const cheapest = state.products.find((product) => product.price === min);
-      const mostExpensive = state.products.find((product) => product.price === max);
+      const cheapest = products.find((product) => product.price === min);
+      const mostExpensive = products.find(
+        (product) => product.price === max
+      );
       setCheapestProduct(cheapest);
       setMostExpensiveProduct(mostExpensive);
 
       const categoryMap = {};
-      state.products.forEach((product) => {
+      products.forEach((product) => {
         const category = product.category;
         if (categoryMap[category]) {
           categoryMap[category]++;
@@ -38,7 +50,7 @@ const Dashboard = () => {
       });
       setCategoryCount(categoryMap);
     }
-  }, [state.products]);
+  }, [products]);
 
   return (
     <div className="p-6 min-h-screen">

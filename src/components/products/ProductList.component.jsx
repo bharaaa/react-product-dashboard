@@ -27,7 +27,7 @@ const ProductList = () => {
       let url = `https://fakestoreapi.com/products?limit=${itemsPerPage}&sort=${sort}`;
 
       if (selectedCategory) {
-        url += `&category=${selectedCategory}`;
+        url = `https://fakestoreapi.com/products/category/${selectedCategory}`;
       }
 
       const response = await fetch(url);
@@ -38,7 +38,7 @@ const ProductList = () => {
     };
 
     fetchProducts();
-  }, [selectedCategory, currentPage, sort, itemsPerPage, setProducts]);
+  }, [selectedCategory, currentPage, sort, itemsPerPage]);
 
   // Calculate total pages based on total products and items per page
   const totalPages = Math.ceil(totalProducts / itemsPerPage);

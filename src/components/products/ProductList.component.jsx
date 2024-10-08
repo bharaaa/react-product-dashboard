@@ -7,7 +7,7 @@ const ProductList = () => {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5);
+  const [itemsPerPage] = useState(10);
   const [sort, setSort] = useState("asc");
   const [totalProducts, setTotalProducts] = useState(0);
 
